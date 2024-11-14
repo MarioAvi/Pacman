@@ -14,7 +14,6 @@
         }
     }
 
-    //mfklenmfgknmsk
     Pacman.movimientoDerecha = function () {
         this.x = this.x + this.velocidad;
         this.spritePorDefecto = [
@@ -22,6 +21,34 @@
             [32, 0],
         ];
         if (comprobarMapa(mapa)) {
-            this.x = limiteDerecha
+            this.x = limiteDerecha;
+        };
+    };
+    Pacman.movimientoIzquierda = function () {
+        this.x = this.x - this.velocidad;
+        this.spritePorDefecto = [
+            [0, 32],
+            [32, 32],
+        ];
+        if (comprobarMapa(mapa)) {
+            this.x = limiteIzquierda;
+        };
+    };Pacman.movimientoArriba = function () {
+        this.y = this.y - this.velocidad;
+        this.spritePorDefecto = [
+            [0, 64],
+            [32, 64],
+        ];
+        if (comprobarMapa(mapa)) {
+            this.y = limiteArriba;
+        };
+    };Pacman.movimientoAbajo = function () {
+        this.y = this.y + this.velocidad;
+        this.spritePorDefecto = [
+            [0, 96],
+            [32, 96],
+        ];
+        if (comprobarMapa(mapa)) {
+            this.y = limiteAbajo;
         };
     };
