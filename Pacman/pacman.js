@@ -7,20 +7,21 @@
         constructor(x, y, tamañoX, tamañoY, velocidad) {
             this.x = x;
             this.y = y;
-            (this.spritePorDefecto = [0, 0]), [32, 0];
+            this.spritePorDefecto = [0, 0], [32, 0];
             this.velocidad = velocidad;
             this.tamañoX = tamañoX;
             this.tamañoY = tamañoY;
         }
     }
 
+    //mfklenmfgknmsk
     Pacman.movimientoDerecha = function () {
         this.x = this.x + this.velocidad;
         this.spritePorDefecto = [
             [0, 0],
             [32, 0],
         ];
-        if (recorrerMapa(mapa)) {
+        if (comprobarMapa(mapa)) {
             this.x = limiteDerecha
         };
     };
