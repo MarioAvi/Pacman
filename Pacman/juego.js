@@ -20,7 +20,6 @@
 
 
 
-   // fafcasdc
     let fps = 30;
     let tamañoBloque = 20;
     let colorPared = "#342DCA" // Color de la pared
