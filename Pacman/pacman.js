@@ -5,7 +5,7 @@
     const imagen            = document.getElementById("animacionPacman");
     
 
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2;
     let posicion = 0;
     
 
@@ -13,7 +13,7 @@
         constructor(x, y, tamañoX, tamañoY, velocidad) {
             this.x = x;
             this.y = y;
-            this.spritePorDefecto = [0, 0], [32, 0];
+            this.spritePacman = [0, 0], [32, 0];
             this.velocidad = velocidad;
             this.tamañoX = tamañoX;
             this.tamañoY = tamañoY;
@@ -22,7 +22,7 @@
 
     Pacman.movimientoDerecha = function () {
         this.x = this.x + this.velocidad;
-        this.spritePorDefecto = [
+        this.spritePacman = [
             [0, 0],
             [32, 0],
         ];
@@ -33,7 +33,7 @@
 
     Pacman.movimientoIzquierda = function () {
         this.x = this.x - this.velocidad;
-        this.spritePorDefecto = [
+        this.spritePacman = [
             [0, 32],
             [32, 32],
         ];
@@ -44,7 +44,7 @@
     
     Pacman.movimientoArriba = function () {
         this.y = this.y - this.velocidad;
-        this.spritePorDefecto = [
+        this.spritePacman = [
             [0, 64],
             [32, 64],
         ];
@@ -55,7 +55,7 @@
     
     Pacman.movimientoAbajo = function () {
         this.y = this.y + this.velocidad;
-        this.spritePorDefecto = [
+        this.spritePacman = [
             [0, 96],
             [32, 96],
         ];
@@ -91,8 +91,8 @@
 		};
     };
     ctx.drawImage(miPacman.imagen, // Imagen completa con todos los comecocos (Sprite)
-        miPacman.spritePorDefecto[posicion][0],    // Posicion X del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
-        miPacman.spritePorDefecto[posicion][1],	  // Posicion Y del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
+        miPacman.spritePacman[posicion][0],    // Posicion X del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
+        miPacman.spritePacman[posicion][1],	  // Posicion Y del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
         miPacman.tamañoX, 		    // Tamaño X del comecocos que voy a recortar para dibujar
         miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
         miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
@@ -135,5 +135,12 @@
 		}
 	}
     document.addEventListener("keydown", activaMovimiento, false);
+    imagen = new Image();
+    imagen.src= document.getElementById("animacionPacman")
+    miPacman.imagen = imagen;
     miPacman = new Pacman(20, 20, 20, 20, 1.1)
-    miPacman.imagen = imagen
+
+
+    id1 = setInterval(pintaRectangulo, 1000/50);	
+	
+	id2 = setInterval(abreCierraBoca, 1000/8);

@@ -1,6 +1,5 @@
     const canvas = document.getElementById("miCanvas");
     const ctx = canvas.getContext("2d");
-    //He puesto las imágenes en el html porque me aclaro más para cogerlas asi y he puesto que no se muestren con display: none en el style de su div
 
     function crearRect(x, y, width, height, color) {
         ctx.fillStyle = color;
