@@ -1,14 +1,13 @@
-
     const canvas = document.getElementById("miCanvas");
-    const canvasContext = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     //He puesto las imágenes en el html porque me aclaro más para cogerlas asi y he puesto que no se muestren con display: none en el style de su div
 
     function crearRect(x, y, width, height, color) {
-        canvasContext.fillStyle = color;
-        canvasContext.fillRect(x, y, width, height)
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, width, height)
     } 
 
-    function comprobarMapa(mapa){ //comprobar si la siguiente posición del array es una pared
+    function comprobarMuro(mapa){ //comprobar si la siguiente posición del array es una pared
         for (let i = 0; i < mapa.length; i++) {
             for (let j = 0; j < mapa[i].length; j++) {
                 if (mapa[i][j] == 1) {
@@ -22,7 +21,7 @@
 
     let fps = 30;
     let tamañoBloque = 20;
-    let colorPared = "#342DCA" // Color de la pared
+    let colorPared = "red" // Color de la pared #342DCA
     let anchoMapa = 420;
     let altoMapa = 440;
     let interiorPared = tamañoBloque / 1.1; // Segun por que lo divida es más o menos pequeño (18)
