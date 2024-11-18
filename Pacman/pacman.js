@@ -2,11 +2,12 @@
     const limiteIzquierda   = this.x + 20;
     const limiteArriba      = this.y + 20;
     const limiteAbajo       = this.y - 20;
-    const imagen            = document.getElementById("animacionPacman");
-    
+
 
     let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2;
     let posicion = 0;
+    let imagen = new Image();
+    imagen.src= "assets/img/spritePacman.png";
     
 
     class Pacman {
@@ -20,7 +21,12 @@
         }
     }
 
-    Pacman.movimientoDerecha = function () {
+    miPacman = new Pacman(20, 20, 20, 20, 1.1)
+    miPacman.imagen = imagen;
+
+
+
+    Pacman.prototype.movimientoDerecha = function () {
         this.x = this.x + this.velocidad;
         this.spritePacman = [
             [0, 0],
@@ -31,7 +37,7 @@
         };
     };
 
-    Pacman.movimientoIzquierda = function () {
+    Pacman.prototype.movimientoIzquierda = function () {
         this.x = this.x - this.velocidad;
         this.spritePacman = [
             [0, 32],
@@ -42,7 +48,7 @@
         };
     };
     
-    Pacman.movimientoArriba = function () {
+    Pacman.prototype.movimientoArriba = function () {
         this.y = this.y - this.velocidad;
         this.spritePacman = [
             [0, 64],
@@ -53,7 +59,7 @@
         };
     };
     
-    Pacman.movimientoAbajo = function () {
+    Pacman.prototype.movimientoAbajo = function () {
         this.y = this.y + this.velocidad;
         this.spritePacman = [
             [0, 96],
@@ -64,41 +70,40 @@
         };
     };
 
-    function movimientosPacman() {
-		
-		// borramos el canvas
-		ctx.clearRect(0, 0, 500, 500);		
+    function dibujarPacman() {
 		
 		if (xDerecha) {
 			
-			miPacman.generaPosicionDerecha();
+			miPacman.movimientoDerecha();
 	   
 		};
 		if (xIzquierda) {
 			
-			miPacman.generaPosicionIzquierda();
+			miPacman.movimientoIzquierda();
 	   
 		};
 		if (yArriba) {
 			
-			miPacman.generaPosicionArriba();
+			miPacman.movimientoArriba();
 	   
 		};
 		if (yAbajo) {
 			
-			miPacman.generaPosicionAbajo();
+			miPacman.movimientoAbajo();
 	   
 		};
+        ctx.drawImage(miPacman.imagen, // Imagen completa con todos los comecocos (Sprite)
+            miPacman.spritePacman[posicion][0],    // Posicion X del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
+            miPacman.spritePacman[posicion][1],	  // Posicion Y del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
+            miPacman.tamañoX, 		    // Tamaño X del comecocos que voy a recortar para dibujar
+            miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
+            miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
+            miPacman.y,				            // Posicion y de pantalla donde voy a dibujar el comecocos recortado
+            miPacman.tamañoX,		    // Tamaño X del comecocos que voy a dibujar
+            miPacman.tamañoY);         // Tamaño Y del comecocos que voy a dibujar
     };
-    ctx.drawImage(miPacman.imagen, // Imagen completa con todos los comecocos (Sprite)
-        miPacman.spritePacman[posicion][0],    // Posicion X del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
-        miPacman.spritePacman[posicion][1],	  // Posicion Y del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
-        miPacman.tamañoX, 		    // Tamaño X del comecocos que voy a recortar para dibujar
-        miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
-        miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
-        miPacman.y,				            // Posicion y de pantalla donde voy a dibujar el comecocos recortado
-        miPacman.tamañoX,		    // Tamaño X del comecocos que voy a dibujar
-        miPacman.tamañoY);         // Tamaño Y del comecocos que voy a dibujar
+    
+   
 
     function abreCierraBoca() {
 		
@@ -134,13 +139,16 @@
 		 
 		}
 	}
+
+    function juego() {
+
+        dibujar();
+        dibujarPacman();
+        abreCierraBoca();
+    } 
+
     document.addEventListener("keydown", activaMovimiento, false);
-    imagen = new Image();
-    imagen.src= document.getElementById("animacionPacman")
-    miPacman.imagen = imagen;
-    miPacman = new Pacman(20, 20, 20, 20, 1.1)
 
 
-    id1 = setInterval(pintaRectangulo, 1000/50);	
-	
-	id2 = setInterval(abreCierraBoca, 1000/8);
+    id1 = setInterval(dibujarPacman, 1000/50);	
+

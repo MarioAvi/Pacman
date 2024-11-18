@@ -69,7 +69,6 @@
 
     };
 
-    let intervaloJuego = setInterval(bucleJuego, 1000 / fps);
 
     function dibujarParedes() {
         for (let i = 0; i < mapa.length; i++) {
