@@ -9,7 +9,7 @@
     function comprobarMuro(mapa){ //comprobar si la siguiente posición del array es una pared
         for (let i = 0; i < mapa.length; i++) {
             for (let j = 0; j < mapa[i].length; j++) {
-                if (mapa[i][j] == 1) {
+                if (mapa[i][j] === 1) {
                     return true;
                 }
             }

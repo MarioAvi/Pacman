@@ -1,4 +1,6 @@
-    const limiteDerecha     = this.x - 20;
+
+  
+   const limiteDerecha     = this.x - 20;
     const limiteIzquierda   = this.x + 20;
     const limiteArriba      = this.y + 20;
     const limiteAbajo       = this.y - 20;
@@ -11,17 +13,17 @@
     
 
     class Pacman {
-        constructor(x, y, tamañoX, tamañoY, velocidad) {
+        constructor(x, y,) {
             this.x = x;
             this.y = y;
-            this.spritePacman = [0, 0], [32, 0];
-            this.velocidad = velocidad;
-            this.tamañoX = tamañoX;
-            this.tamañoY = tamañoY;
+            this.spritePacman = [[0, 0], [32, 0]];
+            this.velocidad = 1.3
+            this.tamañoX = 30;
+            this.tamañoY = 30;
         }
     }
 
-    miPacman = new Pacman(20, 20, 20, 20, 1.1)
+    miPacman = new Pacman(20, 20)
     miPacman.imagen = imagen;
 
 
@@ -32,42 +34,42 @@
             [0, 0],
             [32, 0],
         ];
-        if (comprobarMuro(mapa)) {
-            this.x = limiteDerecha;
-        };
+        // if (comprobarMuro(mapa)) {
+        //     this.x = limiteDerecha;
+        // };
     };
 
     Pacman.prototype.movimientoIzquierda = function () {
         this.x = this.x - this.velocidad;
         this.spritePacman = [
-            [0, 32],
-            [32, 32],
+            [0, 64],
+            [32, 64],
         ];
-        if (comprobarMuro(mapa)) {
-            this.x = limiteIzquierda;
-        };
+        // if (comprobarMuro(mapa)) {
+        //     this.x = limiteIzquierda;
+        // };
     };
     
     Pacman.prototype.movimientoArriba = function () {
         this.y = this.y - this.velocidad;
         this.spritePacman = [
-            [0, 64],
-            [32, 64],
+            [0, 96],
+            [32, 96],
         ];
-        if (comprobarMuro(mapa)) {
-            this.y = limiteArriba;
-        };
+        // if (comprobarMuro(mapa)) {
+        //     this.y = limiteArriba;
+        // };
     };
     
     Pacman.prototype.movimientoAbajo = function () {
         this.y = this.y + this.velocidad;
         this.spritePacman = [
-            [0, 96],
-            [32, 96],
+            [0, 32],
+            [32, 32],
         ];
-        if (comprobarMuro(mapa)) {
-            this.y = limiteAbajo;
-        };
+        // if (comprobarMuro(mapa)) {
+        //     this.y = limiteAbajo;
+        // };
     };
 
     function dibujarPacman() {
@@ -99,8 +101,8 @@
             miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
             miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
             miPacman.y,				            // Posicion y de pantalla donde voy a dibujar el comecocos recortado
-            miPacman.tamañoX,		    // Tamaño X del comecocos que voy a dibujar
-            miPacman.tamañoY);         // Tamaño Y del comecocos que voy a dibujar
+            20,		    // Tamaño X del comecocos que voy a dibujar
+            20);         // Tamaño Y del comecocos que voy a dibujar
     };
     
    
@@ -144,11 +146,10 @@
 
         dibujar();
         dibujarPacman();
-        abreCierraBoca();
     } 
 
     document.addEventListener("keydown", activaMovimiento, false);
 
 
-    id1 = setInterval(dibujarPacman, 1000/50);	
-
+    id1 = setInterval(juego, 1000/50);	
+    id2 = setInterval(abreCierraBoca, 1000/8);
