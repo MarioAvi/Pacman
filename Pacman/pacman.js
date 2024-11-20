@@ -1,9 +1,9 @@
 
   
-   const limiteDerecha     = this.x - 20;
-    const limiteIzquierda   = this.x + 20;
-    const limiteArriba      = this.y + 20;
-    const limiteAbajo       = this.y - 20;
+    const limiteDerecha     = this.x - 25;
+    const limiteIzquierda   = this.x + 25;
+    const limiteArriba      = this.y + 25;
+    const limiteAbajo       = this.y - 25;
 
 
     let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2;
@@ -13,64 +13,79 @@
     
 
     class Pacman {
-        constructor(x, y,) {
+        constructor(x, y) {
             this.x = x;
             this.y = y;
-            this.spritePacman = [[0, 0], [32, 0]];
-            this.velocidad = 1.3
+            this.spritePacmanDerecha = [[0, 0], [32, 0]];
+            this.spritePacmanIzquierda = [[0, 64],[32, 64]];
+            this.spritePacmanArriba = [[0, 96],[32, 96]];
+            this.spritePacmanAbajo = [[0, 32], [32, 32]];
+
+
+
+            this.spritePacman = this.spritePacmanDerecha;
+
+
+            this.velocidad = 1.5;
             this.tamañoX = 30;
             this.tamañoY = 30;
-        }
+        };
+
+        movimientoDerecha() {
+            
+            this.spritePacman = this.spritePacmanDerecha;
+            this.x = this.x + this.velocidad;
+
+
+
+
+            let i = Math.trunc((this.x + 25)/ 30)
+            let j = Math.trunc((this.y + 25) / 30)
+
+            //(console.log((this.x + 25/ 30),"-", i,"-",j);
+            if (esMuro(i,j)) {
+                console.log("es muro");
+                
+                this.x = this.x - this.velocidad;
+                
+            } 
+        };
+
+        movimientoIzquierda() {
+            this.x = this.x - this.velocidad;
+            this.spritePacman = this.spritePacmanIzquierda;
+            // i = (this.x + 25)/ 30
+            // j = (this.y + 25) / 30
+            // if (esMuro(i,j)) {
+            //     this.x = limiteDerecha;
+            // } 
+
+        };
+        
+        movimientoArriba() {
+            this.y = this.y - this.velocidad;
+            this.spritePacman = this.spritePacmanArriba;
+            // i = (this.x + 25)/ 30
+            // j = (this.y + 25) / 30
+            // if (esMuro(i,j)) {
+            //     this.x = limiteDerecha;
+            // } 
+
+        };
+        
+        movimientoAbajo() {
+            this.y = this.y + this.velocidad;
+            this.spritePacman = this.spritePacmanAbajo;
+            // i = (this.x + 25)/ 30
+            // j = (this.y + 25) / 30
+            // if (esMuro(i,j)) {
+            //     this.x = limiteDerecha;
+            // } 
+        };
     }
 
-    miPacman = new Pacman(20, 20)
+    miPacman = new Pacman(32, 32)
     miPacman.imagen = imagen;
-
-
-
-    Pacman.prototype.movimientoDerecha = function () {
-        this.x = this.x + this.velocidad;
-        this.spritePacman = [
-            [0, 0],
-            [32, 0],
-        ];
-        // if (comprobarMuro(mapa)) {
-        //     this.x = limiteDerecha;
-        // };
-    };
-
-    Pacman.prototype.movimientoIzquierda = function () {
-        this.x = this.x - this.velocidad;
-        this.spritePacman = [
-            [0, 64],
-            [32, 64],
-        ];
-        // if (comprobarMuro(mapa)) {
-        //     this.x = limiteIzquierda;
-        // };
-    };
-    
-    Pacman.prototype.movimientoArriba = function () {
-        this.y = this.y - this.velocidad;
-        this.spritePacman = [
-            [0, 96],
-            [32, 96],
-        ];
-        // if (comprobarMuro(mapa)) {
-        //     this.y = limiteArriba;
-        // };
-    };
-    
-    Pacman.prototype.movimientoAbajo = function () {
-        this.y = this.y + this.velocidad;
-        this.spritePacman = [
-            [0, 32],
-            [32, 32],
-        ];
-        // if (comprobarMuro(mapa)) {
-        //     this.y = limiteAbajo;
-        // };
-    };
 
     function dibujarPacman() {
 		
@@ -101,8 +116,8 @@
             miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
             miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
             miPacman.y,				            // Posicion y de pantalla donde voy a dibujar el comecocos recortado
-            20,		    // Tamaño X del comecocos que voy a dibujar
-            20);         // Tamaño Y del comecocos que voy a dibujar
+            25,		    // Tamaño X del comecocos que voy a dibujar
+            25);         // Tamaño Y del comecocos que voy a dibujar
     };
     
    

@@ -1,28 +1,11 @@
     const canvas = document.getElementById("miCanvas");
     const ctx = canvas.getContext("2d");
 
-    function crearRect(x, y, width, height, color) {
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, width, height)
-    } 
-
-    function comprobarMuro(mapa){ //comprobar si la siguiente posición del array es una pared
-        for (let i = 0; i < mapa.length; i++) {
-            for (let j = 0; j < mapa[i].length; j++) {
-                if (mapa[i][j] === 1) {
-                    return true;
-                }
-            }
-        }
-    };
-
-
-
     let fps = 30;
-    let tamañoBloque = 20;
+    let tamañoBloque = 30;
     let colorPared = "red" // Color de la pared #342DCA
-    let anchoMapa = 420;
-    let altoMapa = 440;
+    let anchoMapa = 630;
+    let altoMapa = 700;
     let interiorPared = tamañoBloque / 1.1; // Segun por que lo divida es más o menos pequeño (18)
     let bordePared = (tamañoBloque - interiorPared) / 2; // Calculo la diferencia del tamaño del bloque y del interior y lo divido entre 2 para repartir el hueco sobrante
     let colorRellenoPared = "black"; // Color del relleno
@@ -55,6 +38,32 @@
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]; 
 
+    function crearRect(x, y, width, height, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, width, height)
+    } 
+
+    function esMuro(i,j)
+    { 
+        console.log(i,"-",j,"-", mapa[i][j]);
+        if (mapa[i][j] === 1) {
+            return true;
+        } else {
+            return false
+        }
+    }
+
+/*
+    function comprobarMuro(mapa){ //comprobar si la siguiente posición del array es una pared
+        for (let i = 0; i < mapa.length; i++) {
+            for (let j = 0; j < mapa[i].length; j++) {
+                if (mapa[i][j] === 1) {
+                    return true;
+                }
+            }
+        }
+    }
+*/
     function bucleJuego() {
 
         dibujar();
