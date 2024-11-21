@@ -6,7 +6,7 @@
     const limiteAbajo       = this.y - 25;
 
 
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2;
     let posicion = 0;
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
@@ -37,54 +37,88 @@
             this.x = this.x + this.velocidad;
 
 
-
-
-            let i = Math.trunc((this.x + 25)/ 30)
-            let j = Math.trunc((this.y + 25) / 30)
-
-            //(console.log((this.x + 25/ 30),"-", i,"-",j);
+            i = detectarColisionesDerechaX(this.x);
+            j = detectarColisionesArribaY(this.y);
+            
             if (esMuro(i,j)) {
                 console.log("es muro");
-                
                 this.x = this.x - this.velocidad;
-                
             } 
         };
 
         movimientoIzquierda() {
             this.x = this.x - this.velocidad;
             this.spritePacman = this.spritePacmanIzquierda;
-            // i = (this.x + 25)/ 30
-            // j = (this.y + 25) / 30
-            // if (esMuro(i,j)) {
-            //     this.x = limiteDerecha;
-            // } 
+            
+            i = detectarColisionesIzquierdaX(this.x);
+            j = detectarColisionesArribaY(this.y);
+            
+            if (esMuro(i,j)) {
+                console.log("es muro");
+                this.x = this.x + this.velocidad;
+            } 
 
         };
         
         movimientoArriba() {
             this.y = this.y - this.velocidad;
             this.spritePacman = this.spritePacmanArriba;
-            // i = (this.x + 25)/ 30
-            // j = (this.y + 25) / 30
-            // if (esMuro(i,j)) {
-            //     this.x = limiteDerecha;
-            // } 
+            
+            i = detectarColisionesDerechaX(this.x);
+            j = detectarColisionesArribaY(this.y);
+            
+            if (esMuro(i,j)) {
+                console.log("es muro");
+                this.y = this.y + this.velocidad;
+            } 
 
         };
         
         movimientoAbajo() {
             this.y = this.y + this.velocidad;
             this.spritePacman = this.spritePacmanAbajo;
-            // i = (this.x + 25)/ 30
-            // j = (this.y + 25) / 30
-            // if (esMuro(i,j)) {
-            //     this.x = limiteDerecha;
-            // } 
+            
+            detectarColisionesAbajo(this.x, this.y); 
+            
         };
     }
 
-    miPacman = new Pacman(32, 32)
+    function detectarColisionesDerechaX(x) {
+        i = Math.trunc((x + 25)/ 30);
+        return i;
+    }
+
+    function detectarColisionesArribaY(y) {
+        j = Math.trunc(y / 30);
+        return j;
+    }
+
+    function detectarColisionesIzquierdaX(x) {
+        i = Math.trunc(x / 30);
+        return i;
+    }
+
+    function detectarColisionesAbajoY(y) {
+        j = Math.trunc((y + 25) / 30);
+        return j;
+    }
+
+    function detectarColisionesAbajo(x, y) {
+
+        i = Math.trunc(x / 30);
+        j = Math.trunc((y + 25) / 30);
+        i2 = Math.trunc((x + 25)/ 30);
+        j2 = Math.trunc(y / 30); 
+
+        if (esMuro(i,j) === true || esMuro(i2,j) === true) {
+            console.log("es muro");
+            this.y = this.y - this.velocidad;
+        };
+        return this.y;
+        
+    };
+
+    miPacman = new Pacman(64, 124)
     miPacman.imagen = imagen;
 
     function dibujarPacman() {

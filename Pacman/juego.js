@@ -45,8 +45,8 @@
 
     function esMuro(i,j)
     { 
-        console.log(i,"-",j,"-", mapa[i][j]);
-        if (mapa[i][j] === 1) {
+        console.log(j,"-",i,"-", mapa[j][i]);
+        if (mapa[j][i] === 1) {
             return true;
         } else {
             return false
