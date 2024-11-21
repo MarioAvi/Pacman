@@ -6,7 +6,7 @@
     const limiteAbajo       = this.y - 25;
 
 
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2, direccionPendiente, direccionActual;
     let posicion = 0;
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
@@ -65,26 +65,6 @@
             
             
         };
-    }
-
-    function detectarColisionesDerechaX(x) {
-        i = Math.trunc((x + 25)/ 30);
-        return i;
-    }
-
-    function detectarColisionesArribaY(y) {
-        j = Math.trunc(y / 30);
-        return j;
-    }
-
-    function detectarColisionesIzquierdaX(x) {
-        i = Math.trunc(x / 30);
-        return i;
-    }
-
-    function detectarColisionesAbajoY(y) {
-        j = Math.trunc((y + 25) / 30);
-        return j;
     }
 
     function detectarColisionesAbajo(x, y, velocidad) {
@@ -191,32 +171,55 @@
 
     function activaMovimiento(evt) {
 
-        xDerecha   = false;
-        xIzquierda = false;
-        yAbajo     = false;
-        yArriba    = false;
-
         switch (evt.keyCode) {
 		
 
 			case 39:
-			  xDerecha = true;
-			  break;
+			    direccionPendiente = xDerecha;
+			    break;
 			
 			case 37:
-			  xIzquierda = true;
-			  break;
+                direccionPendiente= xIzquierda;
+                break;
 
 			case 38:
-			  yArriba = true;
-			  break;
+                direccionPendiente = yArriba;
+                break;
 
 			case 40:
-			  yAbajo = true;
-			  break;
+                direccionPendiente = yAbajo;
+                break;
 		 
 		}
 	}
+
+
+    function comprobarMuros() {
+        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)){
+            return true;
+        } else {
+            return false;
+        } 
+        
+    } 
+
+    function comprobarDireccion() {
+        
+        switch (evt.keyCode) {
+
+            case 39:
+                return comprobarMuros();
+
+            case 37:
+                return comprobarMuros();
+
+            case 38:
+                return comprobarMuros();
+
+            case 40:
+                return comprobarMuros();
+        }
+    }
 
     function juego() {
 
