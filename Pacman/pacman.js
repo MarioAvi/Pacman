@@ -37,26 +37,15 @@
             this.x = this.x + this.velocidad;
 
 
-            i = detectarColisionesDerechaX(this.x);
-            j = detectarColisionesArribaY(this.y);
-            
-            if (esMuro(i,j)) {
-                console.log("es muro");
-                this.x = this.x - this.velocidad;
-            } 
+            this.x = detectarColisionesIzquierda(this.x, this.y, this.velocidad);
+
         };
 
         movimientoIzquierda() {
             this.x = this.x - this.velocidad;
             this.spritePacman = this.spritePacmanIzquierda;
             
-            i = detectarColisionesIzquierdaX(this.x);
-            j = detectarColisionesArribaY(this.y);
-            
-            if (esMuro(i,j)) {
-                console.log("es muro");
-                this.x = this.x + this.velocidad;
-            } 
+            this.x = detectarColisionesDerecha(this.x, this.y, this.velocidad);
 
         };
         
@@ -64,13 +53,7 @@
             this.y = this.y - this.velocidad;
             this.spritePacman = this.spritePacmanArriba;
             
-            i = detectarColisionesDerechaX(this.x);
-            j = detectarColisionesArribaY(this.y);
-            
-            if (esMuro(i,j)) {
-                console.log("es muro");
-                this.y = this.y + this.velocidad;
-            } 
+            this.y = detectarColisionesArriba(this.x, this.y, this.velocidad);
 
         };
         
@@ -78,7 +61,8 @@
             this.y = this.y + this.velocidad;
             this.spritePacman = this.spritePacmanAbajo;
             
-            detectarColisionesAbajo(this.x, this.y); 
+            this.y = detectarColisionesAbajo(this.x, this.y, this.velocidad); 
+            
             
         };
     }
@@ -103,18 +87,61 @@
         return j;
     }
 
-    function detectarColisionesAbajo(x, y) {
+    function detectarColisionesAbajo(x, y, velocidad) {
 
         i = Math.trunc(x / 30);
         j = Math.trunc((y + 25) / 30);
         i2 = Math.trunc((x + 25)/ 30);
         j2 = Math.trunc(y / 30); 
 
-        if (esMuro(i,j) === true || esMuro(i2,j) === true) {
+        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
             console.log("es muro");
-            this.y = this.y - this.velocidad;
+            y = y - velocidad;
         };
-        return this.y;
+        return y;
+    };
+
+    function detectarColisionesArriba(x, y, velocidad) {
+
+        i = Math.trunc(x / 30);
+        j = Math.trunc((y + 25) / 30);
+        i2 = Math.trunc((x + 25)/ 30);
+        j2 = Math.trunc(y / 30); 
+
+        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
+            console.log("es muro");
+            y = y + velocidad;
+        };
+        return y;
+    };
+
+    function detectarColisionesDerecha(x, y, velocidad) {
+
+        i = Math.trunc(x / 30);
+        j = Math.trunc((y + 25) / 30);
+        i2 = Math.trunc((x + 25)/ 30);
+        j2 = Math.trunc(y / 30); 
+
+        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
+            console.log("es muro");
+            x = x + velocidad;
+        };
+        return x;
+    };
+
+    function detectarColisionesIzquierda(x, y, velocidad) {
+
+        i = Math.trunc(x / 30);
+        j = Math.trunc((y + 25) / 30);
+        i2 = Math.trunc((x + 25)/ 30);
+        j2 = Math.trunc(y / 30); 
+
+        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
+            console.log("es muro");
+            x = x - velocidad;
+        };
+        return x;
+
         
     };
 

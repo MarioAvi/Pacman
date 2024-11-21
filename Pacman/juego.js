@@ -3,7 +3,7 @@
 
     let fps = 30;
     let tamañoBloque = 30;
-    let colorPared = "red" // Color de la pared #342DCA
+    let colorPared = "#342DCA" // Color de la pared #342DCA
     let anchoMapa = 630;
     let altoMapa = 700;
     let interiorPared = tamañoBloque / 1.1; // Segun por que lo divida es más o menos pequeño (18)
