@@ -1,5 +1,6 @@
     let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2, direccionActual, direccionPendiente;
     let posicion = 0;
+    let puntos = 0;
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
     
@@ -200,11 +201,13 @@
     }
 
     function comerBolas() {
-        i = Math.trunc(miPacman.x  / 30);
+        console.log(puntos);
+        i = Math.trunc(miPacman.x / 30);
         j = Math.trunc(miPacman.y / 30);
 
         if (mapa[j][i] === 2) { 
             mapa[j][i] = 0;
+            puntos += 100
         } 
     }
     
