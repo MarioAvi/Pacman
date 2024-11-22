@@ -62,8 +62,8 @@
     function detectarColisionesAbajo(x, y, velocidad) {
 
         i = Math.trunc(x / 30);
-        j = Math.trunc((y + 25) / 30);
-        i2 = Math.trunc((x + 25)/ 30);
+        j = Math.trunc((y + 28) / 30);
+        i2 = Math.trunc((x + 28)/ 30);
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
@@ -75,8 +75,8 @@
     function detectarColisionesArriba(x, y, velocidad) {
 
         i = Math.trunc(x / 30);
-        j = Math.trunc((y + 25) / 30);
-        i2 = Math.trunc((x + 25)/ 30);
+        j = Math.trunc((y + 28) / 30);
+        i2 = Math.trunc((x + 28)/ 30);
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
@@ -88,8 +88,8 @@
     function detectarColisionesDerecha(x, y, velocidad) {
 
         i = Math.trunc(x / 30);
-        j = Math.trunc((y + 25) / 30);
-        i2 = Math.trunc((x + 25)/ 30);
+        j = Math.trunc((y + 28) / 30);
+        i2 = Math.trunc((x + 28)/ 30);
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
@@ -101,8 +101,8 @@
     function detectarColisionesIzquierda(x, y, velocidad) {
 
         i = Math.trunc(x / 30);
-        j = Math.trunc((y + 25) / 30);
-        i2 = Math.trunc((x + 25)/ 30);
+        j = Math.trunc((y + 28) / 30);
+        i2 = Math.trunc((x + 28)/ 30);
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
@@ -113,31 +113,31 @@
         
     };
 
-    miPacman = new Pacman(64, 124)
+    miPacman = new Pacman(64, 121)
     miPacman.imagen = imagen;
 
     function dibujarPacman() {
 		
-		if (xDerecha) {
-			
-			miPacman.movimientoDerecha();
-	   
-		};
-		if (xIzquierda) {
-			
-			miPacman.movimientoIzquierda();
-	   
-		};
-		if (yArriba) {
-			
-			miPacman.movimientoArriba();
-	   
-		};
-		if (yAbajo) {
-			
-			miPacman.movimientoAbajo();
-	   
-		};
+		if (direccionPendiente && puedeMoverse(miPacman.x, miPacman.y, direccionPendiente)) {
+            direccionActual = direccionPendiente;
+            direccionPendiente = null;
+        }
+    
+        switch (direccionActual) {
+            case "derecha":
+                miPacman.movimientoDerecha();
+                break;
+            case "izquierda":
+                miPacman.movimientoIzquierda();
+                break;
+            case "arriba":
+                miPacman.movimientoArriba();
+                break;
+            case "abajo":
+                miPacman.movimientoAbajo();
+                break;
+        }
+
         ctx.drawImage(miPacman.imagen, // Imagen completa con todos los comecocos (Sprite)
             miPacman.spritePacman[posicion][0],    // Posicion X del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
             miPacman.spritePacman[posicion][1],	  // Posicion Y del sprite donde se encuentra el comecocos que voy a recortar del sprite para dibujar
@@ -145,8 +145,8 @@
             miPacman.tamañoY,	        // Tamaño Y del comecocos que voy a recortar para dibujar
             miPacman.x,                // Posicion x de pantalla donde voy a dibujar el comecocos recortado
             miPacman.y,				            // Posicion y de pantalla donde voy a dibujar el comecocos recortado
-            25,		    // Tamaño X del comecocos que voy a dibujar
-            25);         // Tamaño Y del comecocos que voy a dibujar
+            28,		    // Tamaño X del comecocos que voy a dibujar
+            28);         // Tamaño Y del comecocos que voy a dibujar
     };
     
    
@@ -158,72 +158,48 @@
     }
 
     function activaMovimiento(evt) {
-
-        xDerecha = false;
-        xIzquierda = false;
-        yAbajo = false;
-        yArriba = false;
-
-        switch (evt.keyCode) {
-		
-
-			case 39:
-			    xDerecha = true;
-			    break;
-			
-			case 37:
-                xIzquierda = true;
-                break;
-
-			case 38:
-                yArriba = true;
-                break;
-
-			case 40:
-                yAbajo = true;
-                break;
-		 
-		}
-	}
-
-
-    function elegirDireccion(direccion) {
-        if (comprobarMuros()) {
-            direccionPendiente = direccion;
-        }
+    switch (evt.keyCode) {
+        case 39:
+            direccionPendiente = "derecha";
+            break;
+        case 37:
+            direccionPendiente = "izquierda";
+            break;
+        case 38:
+            direccionPendiente = "arriba";
+            break;
+        case 40:
+            direccionPendiente = "abajo";
+            break;
     }
+}
 
-    function comprobarMuros() {
-        if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)){
-            console.log("es muro")
-            return true;
-        } else {
-            return false;
-        } 
-    } 
-
-    function comprobarDireccion() {
-
-        Derecha = false;
-        Izquierda = false;
-        Abajo = false;
-        Arriba = false;
-        
-        switch (evt.keyCode) {
-
-            case 39:
-                Derecha = true;
-
-            case 37:
-                Izquierda = true;
-
-            case 38:
-                Arriba = true;
-
-            case 40:
-                Abajo = true;
+    function puedeMoverse(x, y, direccion) {
+        let nuevoX = x;
+        let nuevoY = y;
+        switch (direccion) {
+            case "derecha":
+                nuevoX += miPacman.velocidad;
+                break;
+            case "izquierda":
+                nuevoX -= miPacman.velocidad;
+                break;
+            case "arriba":
+                nuevoY -= miPacman.velocidad;
+                break;
+            case "abajo":
+                nuevoY += miPacman.velocidad;
+                break;
         }
+    
+        i = Math.trunc(nuevoX / 30);
+        j = Math.trunc(nuevoY / 30);
+        i2 = Math.trunc((nuevoX + 28) / 30);
+        j2 = Math.trunc((nuevoY + 28) / 30);
+    
+        return !(esMuro(i, j) || esMuro(i2, j) || esMuro(i, j2) || esMuro(i2, j2));
     }
+    
 
     function juego() {
 
