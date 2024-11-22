@@ -163,6 +163,18 @@
             case 40:
                 direccionPendiente = "abajo";
                 break;
+            case 68:
+                direccionPendiente = "derecha";
+                break;
+            case 65:
+                direccionPendiente = "izquierda";
+                break;
+            case 87:
+                direccionPendiente = "arriba";
+                break;
+            case 83:
+                direccionPendiente = "abajo";
+                break;
         }
     }
 
@@ -207,19 +219,33 @@
 
         if (mapa[j][i] === 2) { 
             mapa[j][i] = 0;
-            puntos += 100
+            puntos += 25
+            mostrarPuntos.textContent = puntos;
         } 
     }
-    
+
+    function comerBolasGrandes() {
+        console.log(puntos);
+        i = Math.trunc(miPacman.x / 30);
+        j = Math.trunc(miPacman.y / 30);
+
+        if (mapa[j][i] === 3) { 
+            mapa[j][i] = 0;
+            puntos += 100
+            mostrarPuntos.textContent = puntos;
+        } 
+    }
 
     function juego() {
 
         dibujar();
         dibujarPacman();
         comerBolas();
+        comerBolasGrandes()
     } 
 
     document.addEventListener("keydown", activaMovimiento, false);
+
 
     miPacman = new Pacman(32, 31)
     miPacman.imagen = imagen;
