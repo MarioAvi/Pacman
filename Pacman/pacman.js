@@ -1,12 +1,4 @@
-
-  
-    const limiteDerecha     = this.x - 25;
-    const limiteIzquierda   = this.x + 25;
-    const limiteArriba      = this.y + 25;
-    const limiteAbajo       = this.y - 25;
-
-
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2, direccionPendiente, direccionActual;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2, direccionActual, direccionPendiente;
     let posicion = 0;
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
@@ -37,7 +29,7 @@
             this.x = this.x + this.velocidad;
 
 
-            this.x = detectarColisionesIzquierda(this.x, this.y, this.velocidad);
+            this.x = detectarColisionesDerecha(this.x, this.y, this.velocidad);
 
         };
 
@@ -45,7 +37,7 @@
             this.x = this.x - this.velocidad;
             this.spritePacman = this.spritePacmanIzquierda;
             
-            this.x = detectarColisionesDerecha(this.x, this.y, this.velocidad);
+            this.x = detectarColisionesIzquierda(this.x, this.y, this.velocidad);
 
         };
         
@@ -75,7 +67,6 @@
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
-            console.log("es muro");
             y = y - velocidad;
         };
         return y;
@@ -89,7 +80,6 @@
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
-            console.log("es muro");
             y = y + velocidad;
         };
         return y;
@@ -103,8 +93,7 @@
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
-            console.log("es muro");
-            x = x + velocidad;
+            x = x - velocidad;
         };
         return x;
     };
@@ -117,8 +106,7 @@
         j2 = Math.trunc(y / 30); 
 
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)) {
-            console.log("es muro");
-            x = x - velocidad;
+            x = x + velocidad;
         };
         return x;
 
@@ -171,53 +159,69 @@
 
     function activaMovimiento(evt) {
 
+        xDerecha = false;
+        xIzquierda = false;
+        yAbajo = false;
+        yArriba = false;
+
         switch (evt.keyCode) {
 		
 
 			case 39:
-			    direccionPendiente = xDerecha;
+			    xDerecha = true;
 			    break;
 			
 			case 37:
-                direccionPendiente= xIzquierda;
+                xIzquierda = true;
                 break;
 
 			case 38:
-                direccionPendiente = yArriba;
+                yArriba = true;
                 break;
 
 			case 40:
-                direccionPendiente = yAbajo;
+                yAbajo = true;
                 break;
 		 
 		}
 	}
 
 
+    function elegirDireccion(direccion) {
+        if (comprobarMuros()) {
+            direccionPendiente = direccion;
+        }
+    }
+
     function comprobarMuros() {
         if (esMuro(i,j) || esMuro(i2,j2) || esMuro(i,j2 ) || esMuro(i2,j)){
+            console.log("es muro")
             return true;
         } else {
             return false;
         } 
-        
     } 
 
     function comprobarDireccion() {
+
+        Derecha = false;
+        Izquierda = false;
+        Abajo = false;
+        Arriba = false;
         
         switch (evt.keyCode) {
 
             case 39:
-                return comprobarMuros();
+                Derecha = true;
 
             case 37:
-                return comprobarMuros();
+                Izquierda = true;
 
             case 38:
-                return comprobarMuros();
+                Arriba = true;
 
             case 40:
-                return comprobarMuros();
+                Abajo = true;
         }
     }
 
