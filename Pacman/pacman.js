@@ -12,13 +12,8 @@
             this.spritePacmanIzquierda = [[0, 64],[32, 64]];
             this.spritePacmanArriba = [[0, 96],[32, 96]];
             this.spritePacmanAbajo = [[0, 32], [32, 32]];
-
-
-
             this.spritePacman = this.spritePacmanDerecha;
-
-
-            this.velocidad = 1.5;
+            this.velocidad = 1.7;
             this.tamañoX = 30;
             this.tamañoY = 30;
         };
@@ -27,35 +22,32 @@
             
             this.spritePacman = this.spritePacmanDerecha;
             this.x = this.x + this.velocidad;
-
-
             this.x = detectarColisionesDerecha(this.x, this.y, this.velocidad);
 
         };
 
         movimientoIzquierda() {
+
             this.x = this.x - this.velocidad;
             this.spritePacman = this.spritePacmanIzquierda;
-            
             this.x = detectarColisionesIzquierda(this.x, this.y, this.velocidad);
 
         };
         
         movimientoArriba() {
+
             this.y = this.y - this.velocidad;
             this.spritePacman = this.spritePacmanArriba;
-            
             this.y = detectarColisionesArriba(this.x, this.y, this.velocidad);
 
         };
         
         movimientoAbajo() {
+            
             this.y = this.y + this.velocidad;
             this.spritePacman = this.spritePacmanAbajo;
-            
             this.y = detectarColisionesAbajo(this.x, this.y, this.velocidad); 
-            
-            
+         
         };
     }
 
@@ -113,10 +105,9 @@
         
     };
 
-    miPacman = new Pacman(64, 121)
-    miPacman.imagen = imagen;
-
     function dibujarPacman() {
+
+        teletransporte();
 		
 		if (direccionPendiente && puedeMoverse(miPacman.x, miPacman.y, direccionPendiente)) {
             direccionActual = direccionPendiente;
@@ -158,21 +149,29 @@
     }
 
     function activaMovimiento(evt) {
-    switch (evt.keyCode) {
-        case 39:
-            direccionPendiente = "derecha";
-            break;
-        case 37:
-            direccionPendiente = "izquierda";
-            break;
-        case 38:
-            direccionPendiente = "arriba";
-            break;
-        case 40:
-            direccionPendiente = "abajo";
-            break;
+        switch (evt.keyCode) {
+            case 39:
+                direccionPendiente = "derecha";
+                break;
+            case 37:
+                direccionPendiente = "izquierda";
+                break;
+            case 38:
+                direccionPendiente = "arriba";
+                break;
+            case 40:
+                direccionPendiente = "abajo";
+                break;
+        }
     }
-}
+
+    function teletransporte() {
+        if (miPacman.x <= -25) {
+            miPacman.x = 650;
+        } else if (miPacman.x >= 655) {
+            miPacman.x = -20;
+        } 
+    } 
 
     function puedeMoverse(x, y, direccion) {
         let nuevoX = x;
@@ -199,16 +198,27 @@
     
         return !(esMuro(i, j) || esMuro(i2, j) || esMuro(i, j2) || esMuro(i2, j2));
     }
+
+    function comerBolas() {
+        i = Math.trunc(miPacman.x  / 30);
+        j = Math.trunc(miPacman.y / 30);
+
+        if (mapa[j][i] === 2) { 
+            mapa[j][i] = 0;
+        } 
+    }
     
 
     function juego() {
 
         dibujar();
         dibujarPacman();
+        comerBolas();
     } 
 
     document.addEventListener("keydown", activaMovimiento, false);
 
-
+    miPacman = new Pacman(32, 31)
+    miPacman.imagen = imagen;
     id1 = setInterval(juego, 1000/50);	
     id2 = setInterval(abreCierraBoca, 1000/8);
