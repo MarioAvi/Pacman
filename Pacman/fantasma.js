@@ -38,21 +38,64 @@ class Fantasma {
         this.tamañoY = 103;
     };
 
+    movimientoDerecha() {
+            
+            this.spritePacman = this.spritePacmanDerecha;
+            this.x = this.x + this.velocidad;
+            this.x = detectarColisionesDerecha(this.x, this.y, this.velocidad);
+
+        };
+
+        movimientoIzquierda() {
+
+            this.x = this.x - this.velocidad;
+            this.spritePacman = this.spritePacmanIzquierda;
+            this.x = detectarColisionesIzquierda(this.x, this.y, this.velocidad);
+
+        };
+        
+        movimientoArriba() {
+
+            this.y = this.y - this.velocidad;
+            this.spritePacman = this.spritePacmanArriba;
+            this.y = detectarColisionesArriba(this.x, this.y, this.velocidad);
+
+        };
+        
+        movimientoAbajo() {
+            
+            this.y = this.y + this.velocidad;
+            this.spritePacman = this.spritePacmanAbajo;
+            this.y = detectarColisionesAbajo(this.x, this.y, this.velocidad); 
+         
+        };
+
     
 }
 
+function moverFantasma(fantasma) {
+    let direcciones = ["arriba", "abajo", "izquierda", "derecha"];
+    let direccion = direcciones[Math.floor(Math.random() * direcciones.length)];
+    
+    switch (direccion) {
+        case "arriba":
+            fantasma.y = colisionFantasma(fantasma.x, fantasma.y, "arriba", fantasma.velocidad);
+            break;
+        case "abajo":
+            fantasma.y = colisionFantasma(fantasma.x, fantasma.y, "abajo", fantasma.velocidad);
+            break;
+        case "izquierda":
+            fantasma.x = colisionFantasma(fantasma.x, fantasma.y, "izquierda", fantasma.velocidad);
+            break;
+        case "derecha":
+            fantasma.x = colisionFantasma(fantasma.x, fantasma.y, "derecha", fantasma.velocidad);
+            break;
+    }
+}
 
-fantasmaRosa = new Fantasma(271, 301);
-fantasmaRosa.imagen = imagenFantasma;
-
-fantasmaAzul = new Fantasma(331, 301);
-fantasmaAzul.imagen = imagenFantasma;
-
-fantasmaRojo = new Fantasma(271, 331);
-fantasmaRojo.imagen = imagenFantasma;
-
-fantasmaAmarillo = new Fantasma(331, 331);
-fantasmaAmarillo.imagen = imagenFantasma;
+function colisionFantasma(x, y, direccion, velocidad) {
+    
+}
 
 function dibujarFantasma() {
 
@@ -107,12 +150,28 @@ function animacionFantasma() {
 
 function juego() {
 
-    dibujar();
+    dibujarMapa();
     dibujarPacman();
     comerBolas();
     comerBolasGrandes()
     dibujarFantasma();
+    moverFantasma(fantasmaAmarillo);
+    moverFantasma(fantasmaAzul);
+    moverFantasma(fantasmaRojo);
+    moverFantasma(fantasmaRosa)
 } 
+
+fantasmaRosa = new Fantasma(271, 301);
+fantasmaRosa.imagen = imagenFantasma;
+
+fantasmaAzul = new Fantasma(331, 301);
+fantasmaAzul.imagen = imagenFantasma;
+
+fantasmaRojo = new Fantasma(271, 331);
+fantasmaRojo.imagen = imagenFantasma;
+
+fantasmaAmarillo = new Fantasma(331, 331);
+fantasmaAmarillo.imagen = imagenFantasma;
 
 id1 = setInterval(juego, 1000/50);	
 id2 = setInterval(abreCierraBoca, 1000/8);

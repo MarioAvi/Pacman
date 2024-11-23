@@ -76,12 +76,11 @@
 
     function bucleJuego() {
 
-        dibujar();
 
     };
 
 
-    function dibujar() {
+    function dibujarMapa() {
 
         crearBloque(0, 0, anchoMapa, altoMapa, "black") //Creo que mapa entero
         dibujarParedes(); //Dentro del mapa creo todos los bloques de las paredes
