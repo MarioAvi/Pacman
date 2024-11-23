@@ -213,7 +213,6 @@
     }
 
     function comerBolas() {
-        console.log(puntos);
         i = Math.trunc(miPacman.x / 30);
         j = Math.trunc(miPacman.y / 30);
 
@@ -236,18 +235,10 @@
         } 
     }
 
-    function juego() {
-
-        dibujar();
-        dibujarPacman();
-        comerBolas();
-        comerBolasGrandes()
-    } 
+    
 
     document.addEventListener("keydown", activaMovimiento, false);
 
 
     miPacman = new Pacman(32, 31)
     miPacman.imagen = imagen;
-    id1 = setInterval(juego, 1000/50);	
-    id2 = setInterval(abreCierraBoca, 1000/8);
