@@ -8,7 +8,7 @@ body {
 
 #puntos {
     position: absolute;
-    top: 10px;
+    top: 75px;
     left: 50%;
     transform: translateX(-50%);
     color: #ffffff; 
@@ -19,6 +19,34 @@ body {
     padding: 10px;
     z-index: 10; 
 }
+
+#contador {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff; 
+    font-size: 30px; 
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
+    background: #000000;
+    padding: 10px;
+    z-index: 10; 
+}
+
+#vidasContainer {
+    position: absolute;
+    top: 80px;
+    left: 20%;
+    display: flex;
+    gap: 10px;
+}
+
+.vida {
+    width: 40px; 
+    height: 40px;
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 

@@ -1,8 +1,13 @@
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, i, i2, j, j2, direccionActual, direccionPendiente;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente;
     let posicion = 0;
     let puntos = 0;
+    let contadorPartida = 119;
+    let vidas = 3;
+    let mapaNuevo = [];
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
+    let imagenVidas = new Image();
+    imagenVidas.src = "assets/img/Pacman.png";
     
 
     class Pacman {
@@ -235,10 +240,92 @@
         } 
     }
 
+    function juego() {
+
+        perderVida();
+        dibujarMapa();
+        dibujarPacman();
+        comerBolas();
+        comerBolasGrandes()
+    } 
+
+    function tiempoRestante() {
+        mostrarTiempo.textContent = contadorPartida;
+        contadorPartida--;
+    }
+
+    function perderVida() {
+        if (contadorPartida < 0) {
+            vidas--; // Reducir una vida
+            actualizarVidas();
+    
+            if (vidas > 0) {
+                // Reinicia el estado del juego
+                reiniciarEstado();
+                console.log("entra aqui");
+            } else {
+                // Juego terminado
+                clearInterval(id1);
+                clearInterval(id2);
+                clearInterval(id3);
+                alert("Game Over");
+            }
+        }
+    }
+    
+    function reiniciarEstado() {
+        // Reinicia Pacman
+        contadorPartida = 119; // Reinicia el tiempo por partida
+        mostrarTiempo.textContent = contadorPartida;
+        miPacman = new Pacman(31, 31);
+        miPacman.imagen = imagen;
+        miPacman.spritePacman = miPacman.spritePacmanDerecha;
+
+        direccionActual = null;
+        direccionPendiente = null;
+    
+        // Reinicia el mapa (si tienes un mapa base)
+        reiniciarMapa();
+        
+    
+        // Reinicia otros estados
+        contadorPartida = 5; // Reinicia el tiempo por partida
+        mostrarTiempo.textContent = contadorPartida;
+        mostrarPuntos.textContent = puntos;
+    
+        // Reinicia temporizadores
+        clearInterval(id1);
+        clearInterval(id2);
+        clearInterval(id3);
+    
+        id1 = setInterval(juego, 1000 / 50);
+        id2 = setInterval(abreCierraBoca, 1000 / 8);
+        id3 = setInterval(tiempoRestante, 1000);
+        
+    }
+
+    function actualizarVidas() {
+        const vidasContainer = document.getElementById('vidasContainer');
+        vidasContainer.innerHTML = '';
+        for (let i = 0; i < vidas; i++) {
+            const vidaImagen = new Image(); // Crea una nueva instancia de la imagen
+            vidaImagen.src = "assets/img/Pacman.png"; // Asigna la fuente de la imagen
+            vidaImagen.classList.add('vida'); // Agrega una clase para estilo si es necesario
+            vidasContainer.appendChild(vidaImagen); // Añade la imagen al contenedor
+          }
+    }
+
+    
+
     
 
     document.addEventListener("keydown", activaMovimiento, false);
 
 
-    miPacman = new Pacman(32, 31)
+    miPacman = new Pacman(31, 31)
     miPacman.imagen = imagen;
+    actualizarVidas();
+
+    id1 = setInterval(juego, 1000/50);	
+    id2 = setInterval(abreCierraBoca, 1000/8);
+    id3 = setInterval(tiempoRestante, 1000);
