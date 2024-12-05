@@ -1,9 +1,8 @@
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente, bolas;
     let posicion = 0;
     let puntos = 0;
-    let contadorPartida = 119;
+    let contadorPartida = 99;
     let vidas = 3;
-    let mapaNuevo = [];
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
     let imagenVidas = new Image();
@@ -115,9 +114,12 @@
 
         teletransporte();
 		
-		if (direccionPendiente && puedeMoverse(miPacman.x, miPacman.y, direccionPendiente)) {
-            direccionActual = direccionPendiente;
-            direccionPendiente = null;
+		if (direccionPendiente) {
+            // Verificar si puede moverse en la dirección pendiente
+            if (puedeMoverse(miPacman.x, miPacman.y, direccionPendiente)) {
+                direccionActual = direccionPendiente;
+                direccionPendiente = null; // Resetea la dirección pendiente al aceptarla
+            }
         }
     
         switch (direccionActual) {
@@ -156,32 +158,25 @@
 
     function activaMovimiento(evt) {
         switch (evt.keyCode) {
-            case 39:
+            case 39: // Flecha derecha
+            case 68: // Tecla D
                 direccionPendiente = "derecha";
                 break;
-            case 37:
+            case 37: // Flecha izquierda
+            case 65: // Tecla A
                 direccionPendiente = "izquierda";
                 break;
-            case 38:
+            case 38: // Flecha arriba
+            case 87: // Tecla W
                 direccionPendiente = "arriba";
                 break;
-            case 40:
-                direccionPendiente = "abajo";
-                break;
-            case 68:
-                direccionPendiente = "derecha";
-                break;
-            case 65:
-                direccionPendiente = "izquierda";
-                break;
-            case 87:
-                direccionPendiente = "arriba";
-                break;
-            case 83:
+            case 40: // Flecha abajo
+            case 83: // Tecla S
                 direccionPendiente = "abajo";
                 break;
         }
     }
+    
 
     function teletransporte() {
         if (miPacman.x <= -25) {
@@ -221,8 +216,8 @@
         i = Math.trunc(miPacman.x / 30);
         j = Math.trunc(miPacman.y / 30);
 
-        if (mapa[j][i] === 2) { 
-            mapa[j][i] = 0;
+        if (nivel[j][i] === 2) { 
+            nivel[j][i] = 0;
             puntos += 25
             mostrarPuntos.textContent = puntos;
         } 
@@ -233,8 +228,8 @@
         i = Math.trunc(miPacman.x / 30);
         j = Math.trunc(miPacman.y / 30);
 
-        if (mapa[j][i] === 3) { 
-            mapa[j][i] = 0;
+        if (nivel[j][i] === 3) { 
+            nivel[j][i] = 0;
             puntos += 100
             mostrarPuntos.textContent = puntos;
         } 
@@ -246,7 +241,8 @@
         dibujarMapa();
         dibujarPacman();
         comerBolas();
-        comerBolasGrandes()
+        comerBolasGrandes();
+        quedanBolas();
     } 
 
     function tiempoRestante() {
@@ -275,7 +271,7 @@
     
     function reiniciarEstado() {
         // Reinicia Pacman
-        contadorPartida = 119; // Reinicia el tiempo por partida
+        contadorPartida = 99; // Reinicia el tiempo por partida
         mostrarTiempo.textContent = contadorPartida;
         miPacman = new Pacman(31, 31);
         miPacman.imagen = imagen;
@@ -314,6 +310,16 @@
             vidasContainer.appendChild(vidaImagen); // Añade la imagen al contenedor
           }
     }
+
+    function quedanBolas() {
+        bolas = nivel.some(fila => fila.includes(2));
+
+        if (bolas == false) {
+            mapaActual++;
+            nivel = niveles[mapaActual];
+    }
+
+}
 
     
 
