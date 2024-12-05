@@ -18,7 +18,7 @@
             this.spritePacmanArriba = [[0, 96],[32, 96]];
             this.spritePacmanAbajo = [[0, 32], [32, 32]];
             this.spritePacman = this.spritePacmanDerecha;
-            this.velocidad = 1.7;
+            this.velocidad = 2;
             this.tamañoX = 30;
             this.tamañoY = 30;
         };
@@ -317,6 +317,8 @@
         if (bolas == false) {
             mapaActual++;
             nivel = niveles[mapaActual];
+            miPacman.x = 31;
+            miPacman.y = 31
     }
 
 }
