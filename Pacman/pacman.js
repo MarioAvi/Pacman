@@ -1,7 +1,7 @@
     let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente, bolas;
     let posicion = 0;
     let puntos = 0;
-    let contadorPartida = 99;
+    let contadorPartida = 100;
     let vidas = 3;
     let imagen = new Image();
     imagen.src= "assets/img/spritePacman.png";
@@ -18,7 +18,7 @@
             this.spritePacmanArriba = [[0, 96],[32, 96]];
             this.spritePacmanAbajo = [[0, 32], [32, 32]];
             this.spritePacman = this.spritePacmanDerecha;
-            this.velocidad = 2;
+            this.velocidad = 5;
             this.tamañoX = 30;
             this.tamañoY = 30;
         };
@@ -271,7 +271,7 @@
     
     function reiniciarEstado() {
         // Reinicia Pacman
-        contadorPartida = 99; // Reinicia el tiempo por partida
+        contadorPartida = 100; // Reinicia el tiempo por partida
         mostrarTiempo.textContent = contadorPartida;
         miPacman = new Pacman(31, 31);
         miPacman.imagen = imagen;
@@ -281,11 +281,11 @@
         direccionPendiente = null;
     
         // Reinicia el mapa (si tienes un mapa base)
-        reiniciarMapa();
+        reiniciarMapa(nivel);
         
     
         // Reinicia otros estados
-        contadorPartida = 5; // Reinicia el tiempo por partida
+        contadorPartida = 100; // Reinicia el tiempo por partida
         mostrarTiempo.textContent = contadorPartida;
         mostrarPuntos.textContent = puntos;
     
