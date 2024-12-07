@@ -1,4 +1,4 @@
-    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente, bolas;
+    let xDerecha, xIzquierda, yArriba, yAbajo, miPacman, id1, id2, id3, i, i2, j, j2, direccionActual, direccionPendiente, bolas, segundaFase, terceraFase;
     let posicion = 0;
     let puntos = 0;
     let contadorPartida = 29;
@@ -218,7 +218,7 @@
 
         if (nivel[j][i] === 2) { 
             nivel[j][i] = 0;
-            puntos += 25
+            puntos += 10
             mostrarPuntos.textContent = puntos;
         } 
     }
@@ -242,7 +242,7 @@
         dibujarPacman();
         comerBolas();
         comerBolasGrandes();
-        quedanBolas();
+        siguienteNivel();
     } 
 
     function tiempoRestante() {
@@ -311,20 +311,44 @@
           }
     }
 
-    function quedanBolas() {
+    function siguienteNivel() {
         bolas = nivel.some(fila => fila.includes(2));
 
         if (bolas == false) {
+            if (segundaFase) {
+                contadorPartida += 40;
+            } else if (terceraFase){
+                contadorPartida += 35
+            } else {
+                contadorPartida += 50;
+            }
+            
+
             mapaActual++;
+
+            if (mapaActual >= 3) {
+                if (segundaFase) {
+                    terceraFase = true;
+                    segundaFase = false;
+                    contadorPartida = 30;
+                    mapaActual = 0;
+                } else {
+                segundaFase = true
+                contadorPartida = 30;
+                mapaActual = 0;
+                }
+            }
+
             nivel = niveles[mapaActual];
-            contadorPartida += 30
             miPacman.x = 31;
-            miPacman.y = 31
+            miPacman.y = 31;
+
+            reiniciarMapa(mapaNivel1);
+            reiniciarMapa(mapaNivel2);
+            reiniciarMapa(mapaNivel3);
+        }
+
     }
-
-}
-
-    
 
     
 

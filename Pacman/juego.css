@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Silkscreen:wght@400;700&family=Sixtyfour+Convergence&display=swap');
 body {
     margin-top: 150px;
     background-color: black;
@@ -6,17 +7,26 @@ body {
     align-items: center;
 } 
 
-#puntos {
+#interfaz {
     position: absolute;
-    top: 75px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #ffffff; 
-    font-size: 24px; 
-    font-family: 'Press Start 2P', cursive; 
-    text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    z-index: 10; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10; /* Por encima del canvas */
+    pointer-events: none; /* Permite que clics pasen al canvas */
+}
+
+#vidasContainer, #contador, #puntos {
+    pointer-events: auto; /* Asegura que estos elementos sean interactivos */
+}
+
+#vidasContainer {
+    top: 100px;
+    left: 34%;
+    display: flex;
+    gap: 10px;
+    position: absolute;
 }
 
 #contador {
@@ -24,27 +34,58 @@ body {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    color: #ffffff; 
-    font-size: 30px; 
-    font-family: 'Press Start 2P', cursive; 
+    color: #ffffff;
+    font-size: 40px;
+    font-family: 'Silkscreen';
     text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    z-index: 10; 
 }
 
-#vidasContainer {
+#puntos {
     position: absolute;
-    top: 80px;
-    left: 20%;
-    display: flex;
-    gap: 10px;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 24px;
+    font-family: 'Silkscreen';
+    text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
 }
+
 
 .vida {
-    width: 40px; 
-    height: 40px;
+    width: 30px; 
+    height: 30px;
 }
 
+#botones {
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+#btn {
+    font-family: "Silkscreen";
+    padding: 10px 20px;
+    background-color: black;
+    color: #ffcc00;
+    border: 2px solid #ffcc00;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btn:hover {
+    background-color: #704503;
+}
+
+#miCanvas {
+    position: relative;
+}
+
 
