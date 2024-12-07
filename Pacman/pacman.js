@@ -183,7 +183,7 @@ window.onload = function() {
             case 83: // Tecla S
                 direccionPendiente = "abajo";
                 break;
-            case 27:
+            case 27: // Escape
                 pausarPartida();
         }
     }
@@ -256,7 +256,7 @@ window.onload = function() {
     } 
 
     function tiempoRestante() {
-        if (juegoBloqueado) return; // No decrementar si el juego está bloqueado
+        if (juegoBloqueado) return;
         mostrarTiempo.textContent = contadorPartida;
         contadorPartida--;
     }
@@ -265,7 +265,7 @@ window.onload = function() {
     function perderVida() {
         if (contadorPartida < 0) {
             sonidoPerderVida.play();
-            vidas--; // Reducir una vida
+            vidas--;
             actualizarVidas();
     
             if (vidas > 0) {
@@ -275,18 +275,16 @@ window.onload = function() {
     
                 juegoBloqueado = true; // Bloquea el movimiento
     
-                // Pausa temporizadores
                 clearInterval(id1);
                 clearInterval(id2);
                 clearInterval(id3);
     
-                // Espera 2 segundos antes de reiniciar el estado
                 setTimeout(() => {
-                    mensajeVida.style.display = "none"; // Oculta el mensaje
+                    mensajeVida.style.display = "none";
     
-                    reiniciarEstado(); // Reinicia el juego
-                    juegoBloqueado = false; // Desbloquea el movimiento
-                }, 4000); // Retraso de 2 segundos
+                    reiniciarEstado();
+                    juegoBloqueado = false;
+                }, 4000);
             } else {
 
                 almacenarPuntosEnLocalStorage(puntos); // Guarda los puntos en localStorage
@@ -297,7 +295,7 @@ window.onload = function() {
                 clearInterval(id2);
                 clearInterval(id3);
     
-                // Mostrar mensaje de Game Over
+                // Mostrar mensaje de Game Over ya que no quedan vidas
                 musicaFondo.pause();
                 mensajeGameOver.textContent = "Game Over";
                 mensajeGameOver.style.display = "block";
@@ -322,10 +320,9 @@ window.onload = function() {
         direccionActual = null;
         direccionPendiente = null;
     
-        // Reinicia el mapa (si tienes un mapa base)
+        //Reinicia el mapa en el que este en ese momento
         reiniciarMapa(nivel);
     
-        // Actualiza otros estados
         mostrarTiempo.textContent = contadorPartida;
         mostrarPuntos.textContent = puntos;
     
@@ -344,10 +341,10 @@ window.onload = function() {
         const vidasContainer = document.getElementById('vidasContainer');
         vidasContainer.innerHTML = '';
         for (let i = 0; i < vidas; i++) {
-            const vidaImagen = new Image(); // Crea una nueva instancia de la imagen
-            vidaImagen.src = "assets/img/Pacman.png"; // Asigna la fuente de la imagen
-            vidaImagen.classList.add('vida'); // Agrega una clase para estilo si es necesario
-            vidasContainer.appendChild(vidaImagen); // Añade la imagen al contenedor
+            const vidaImagen = new Image();
+            vidaImagen.src = "assets/img/Pacman.png";
+            vidaImagen.classList.add('vida');
+            vidasContainer.appendChild(vidaImagen);
           }
     }
 
@@ -381,7 +378,6 @@ window.onload = function() {
             miPacman.x = 31;
             miPacman.y = 31;
     
-            // Reinicia los mapas según sea necesario
             reiniciarMapa(mapaNivel1);
             reiniciarMapa(mapaNivel2);
             reiniciarMapa(mapaNivel3);
@@ -404,7 +400,7 @@ window.onload = function() {
         id1 = setInterval(juego, 1000 / 50);
         id2 = setInterval(abreCierraBoca, 1000 / 12);
         setTimeout(() => {
-            mensajeInicio.style.display = "none"; // Oculta el mensaje
+            mensajeInicio.style.display = "none";
             juegoBloqueado = false;
             id3 = setInterval(tiempoRestante, 1000);
         }, 5700);
@@ -412,7 +408,6 @@ window.onload = function() {
     }
 
     function reiniciarPartida() {
-        // Limpia intervalos y reinicia variables
         clearInterval(id1);
         clearInterval(id2);
         clearInterval(id3);
@@ -445,15 +440,13 @@ window.onload = function() {
         reiniciarMapa(mapaNivel2);
         reiniciarMapa(mapaNivel3);
     
-        juegoBloqueado = true; // Bloquea el movimiento temporalmente
+        juegoBloqueado = true;
     
-        // Inicializa Pacman y dibuja el mapa inmediatamente
-        miPacman = new Pacman(31, 31); // Posición inicial de Pacman
+        miPacman = new Pacman(31, 31);
         miPacman.imagen = imagen;
         dibujarMapa();
         dibujarPacman();
     
-        // Muestra mensaje de reinicio
         mensajeReinicio.style.display = "block";
     
         setTimeout(() => {
@@ -461,16 +454,14 @@ window.onload = function() {
             mensajeInicio.textContent = "¡Preparados!";
             mensajeInicio.style.display = "block";
     
-            // No redibuja a Pacman aquí, ya está dibujado
-    
             musicaFondo.play();
     
             setTimeout(() => {
-                mensajeInicio.style.display = "none"; // Oculta el mensaje "¡Preparados!"
-                iniciarTemporizadores(); // Inicia los temporizadores del juego
+                mensajeInicio.style.display = "none";
+                iniciarTemporizadores();
                 juegoBloqueado = false; // Desbloquea el movimiento después del mensaje
-            }, 5700); // Duración del mensaje "¡Preparados!"
-        }, 2000); // Tiempo antes de mostrar el mensaje "¡Preparados!"
+            }, 5700);
+        }, 2000);
     }
     
     
@@ -512,10 +503,6 @@ window.onload = function() {
     function almacenarPuntosEnLocalStorage(puntos) {
         localStorage.setItem('puntosGuardados', puntos); // Almacena los puntos
     }
-    
-    function obtenerPuntosDeLocalStorage() {
-        return localStorage.getItem('puntosGuardados') || 0; // Recupera los puntos o devuelve 0 si no hay puntos guardados
-    }
 
     function almacenarPuntuacionMasAlta(puntos) {
         const puntuacionMasAlta = obtenerPuntuacionMasAlta();
@@ -535,7 +522,7 @@ window.onload = function() {
 
     document.addEventListener("keydown", (e) => {
         if (e.code === "Space") {
-            e.preventDefault(); // Bloquea cualquier acción predeterminada
+            e.preventDefault(); // Bloquea cualquier acción predeterminada, al darle al espacio después de reiniciar me reiniciaba otra vez porque me detectaba el ultimo boton presionado
         }
     });
     
