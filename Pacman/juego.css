@@ -51,6 +51,30 @@ body {
     text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
 }
 
+#mostrarFase {
+    position: absolute;
+    top: 35%;
+    right: 20%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 24px;
+    font-family: 'Silkscreen';
+    text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
+}
+
+#puntuacionMasAlta {
+    top: 100px;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 30%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 24px;
+    font-family: 'Silkscreen';
+    text-shadow: 2px 2px 0px #000000, 3px 3px 2px rgba(0, 0, 0, 0.5);
+}
+
 
 .vida {
     width: 30px; 
@@ -70,7 +94,7 @@ body {
     border-radius: 5px;
 }
 
-#btn {
+#btnInicio, #btnPausa, #btnReset {
     font-family: "Silkscreen";
     padding: 10px 20px;
     background-color: black;
@@ -80,6 +104,20 @@ body {
     cursor: pointer;
 }
 
+#controles {
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    width: 160px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
 #btn:hover {
     background-color: #704503;
 }
@@ -87,5 +125,26 @@ body {
 #miCanvas {
     position: relative;
 }
+
+#mensajePausa, #mensajeInicio, #mensajeVida, #mensajeGameOver, #mensajeReinicio {
+    font-family: "Silkscreen";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: red;
+    border: 2px solid red;
+    padding: 20px 40px;
+    font-size: 24px;
+    text-align: center;
+    z-index: 1000;
+    display: none; /* Ocultarlo por defecto */
+}
+
+.oculto {
+    display: none; /* Clase para ocultar elementos */
+}
+
 
 

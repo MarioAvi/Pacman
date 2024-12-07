@@ -2,6 +2,27 @@
     const ctx = canvas.getContext("2d");
     const mostrarPuntos = document.getElementById("puntos");
     const mostrarTiempo = document.getElementById("contador");
+    const iniciar = document.getElementById("btnInicio");
+    const pausar = document.getElementById("btnPausa");
+    const reiniciar = document.getElementById("btnReset");
+    const mensajePausa = document.getElementById("mensajePausa");
+    const mensajeInicio = document.getElementById("mensajeInicio");
+    const mensajeReinicio = document.getElementById("mensajeReinicio");
+    const mensajeVida = document.getElementById("mensajeVida");
+    const mensajeGameOver = document.getElementById("mensajeGameOver");
+    const mostrarFase = document.getElementById("mostrarFase");
+
+    let musicaFondo = new Audio("assets/audio/musicaFondo.mp3");
+    musicaFondo.loop = true; // Hacer que se repita en bucle
+    musicaFondo.volume = 0.01;
+    let sonidoPerderVida = new Audio("assets/audio/perderVida.mp3");
+    sonidoPerderVida.volume = 0.2;
+    let sonidoPausa = new Audio("assets/audio/pausar.mp3");
+    sonidoPausa.volume = 0.1;
+    let sonidoNivelPasado = new Audio("assets/audio/siguienteNivel.mp3");
+    sonidoNivelPasado.volume = 0.3;
+
+
 
 
     let fps = 30;
@@ -250,7 +271,6 @@
 
     function esMuro(i,j)
     { 
-        console.log(j,"-",i,"-", nivel[j][i]);
         if (nivel[j][i] === 1) {
             return true;
         } else {

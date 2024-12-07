@@ -12,15 +12,23 @@
         <div id="contador">30</div>
         <div id="puntos">0</div>
     </div>
+    <div id="mensajePausa" class="oculto">Partida Pausada</div>
+    <div id="mensajeInicio">¡Preparados!</div>
+    <div id="mensajeReinicio">Reiniciando...</div>
+    <div id="mensajeVida">¡Perdiste una vida!</div>
+    <div id="mensajeGameOver">Game Over</div>
+    
+    <div id="puntuacionMasAlta">Record: 0</div>
+    <div id="mostrarFase">Fase: 1</div>
     <div id="botones">
-        <button id="btn">Iniciar Partida</button>
-        <button id="btn">Pausar Partida</button>
-        <button id="btn">Reiniciar Partida</button>
+        <button id="btnInicio">Iniciar Partida</button>
+        <button id="btnPausa">Pausar Partida</button>
+        <button id="btnReset">Reiniciar Partida</button>
     </div>
+    <div id="controles"><img src="assets/img/controles.png" alt=""></div>
     <canvas id="miCanvas" width="630" height="720"></canvas>
     <div style="display: none;">
         <img id="animacionPacman" src="assets/img/spritePacman.png" alt="">
-        <img id="animacionFantasmas" src="assets/img/spriteFantasmas.png" alt="">
     </div>
     <script src="mapa.js"> </script>
     <script src="pacman.js"></script>
