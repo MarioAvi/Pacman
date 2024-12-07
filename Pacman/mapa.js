@@ -12,6 +12,10 @@
     const mensajeGameOver = document.getElementById("mensajeGameOver");
     const mostrarFase = document.getElementById("mostrarFase");
 
+    pausar.disabled = true;
+    pausar.style.cursor = "not-allowed";
+    reiniciar.disabled = true;
+    reiniciar.style.cursor = "not-allowed";
     let musicaFondo = new Audio("assets/audio/musicaFondo.mp3");
     musicaFondo.loop = true; // Hacer que se repita en bucle
     musicaFondo.volume = 0.01;

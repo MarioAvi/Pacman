@@ -4,10 +4,9 @@ window.onload = function() {
     let faseActual = 0;
     let posicion = 0;
     let puntos = 0;
-    let contadorPartida = 29;
+    let contadorPartida = 30;
     let pausada = false;
     let juegoBloqueado = true;
-    let juegoCorriendo = false;
     const tiempoPorFase = [50, 40, 35, 30, 25, 20, 15, 10, 5, 0]
     let vidas = 3;
     let imagen = new Image();
@@ -286,16 +285,22 @@ window.onload = function() {
                     juegoBloqueado = false;
                 }, 4000);
             } else {
-
+                // Manejo del Game Over
                 almacenarPuntosEnLocalStorage(puntos); // Guarda los puntos en localStorage
                 almacenarPuntuacionMasAlta(puntos); // Guarda la puntuación más alta
                 actualizarPuntuacionMasAltaEnPantalla();
-                // Manejo del Game Over
+    
                 clearInterval(id1);
                 clearInterval(id2);
                 clearInterval(id3);
+                iniciar.disabled = false;
+                iniciar.style.cursor = "pointer";
+                pausar.disabled = true;
+                pausar.style.cursor = "not-allowed";
+                reiniciar.disabled = true;
+                reiniciar.style.cursor = "not-allowed";
     
-                // Mostrar mensaje de Game Over ya que no quedan vidas
+                // Mostrar mensaje de Game Over
                 musicaFondo.pause();
                 mensajeGameOver.textContent = "Game Over";
                 mensajeGameOver.style.display = "block";
@@ -305,11 +310,17 @@ window.onload = function() {
     
     
     
+    
     function reiniciarEstado() {
+
+        clearInterval(id1);
+        clearInterval(id2);
+        clearInterval(id3);
+
         if (mapaActual === 2) {
             contadorPartida = 45;
         } else {
-            contadorPartida = 29;
+            contadorPartida = 30;
         }
         mostrarTiempo.textContent = contadorPartida;
     
@@ -327,9 +338,7 @@ window.onload = function() {
         mostrarPuntos.textContent = puntos;
     
         // Reinicia temporizadores
-        clearInterval(id1);
-        clearInterval(id2);
-        clearInterval(id3);
+
     
         id1 = setInterval(juego, 1000 / 50);
         id2 = setInterval(abreCierraBoca, 1000 / 12);
@@ -386,28 +395,64 @@ window.onload = function() {
     }
 
     function iniciarPartida() {
-
-        iniciar.disabled = true;
-        iniciar.style.cursor = "not-allowed";
-
+        // Resetea estados y temporizadores
+        clearInterval(id1);
+        clearInterval(id2);
+        clearInterval(id3);
+    
+        pausada = false;
+        juegoBloqueado = true; 
+        juegoCorriendo = false;
+    
+        vidas = 3;
+        puntos = 0;
+        faseActual = 0;
+        mapaActual = 0;
+        contadorPartida = 30;
+        nivel = niveles[0];
+        direccionActual = null;
+        direccionPendiente = null;
+    
+        mostrarPuntos.textContent = puntos;
+        mostrarTiempo.textContent = contadorPartida;
+        mostrarFase.textContent = `Fase: ${faseActual + 1}`;
+        actualizarVidas();
+        actualizarPuntuacionMasAltaEnPantalla();
+    
+        // Resetea Pacman y el mapa
+        miPacman = new Pacman(31, 31);
+        miPacman.imagen = imagen;
         dibujarPacman();
         dibujarMapa();
-
+    
+        reiniciarMapa(mapaNivel1);
+        reiniciarMapa(mapaNivel2);
+        reiniciarMapa(mapaNivel3);
+    
+        // Configura botones y mensajes
+        mensajeGameOver.style.display = "none";
+        iniciar.disabled = true;
+        iniciar.style.cursor = "not-allowed";
+        pausar.disabled = false;
+        pausar.style.cursor = "pointer";
+        reiniciar.disabled = false;
+        reiniciar.style.cursor = "pointer";
+    
+        // Muestra mensaje de inicio y configura temporizadores
         mensajeInicio.textContent = "¡Preparados!";
         mensajeInicio.style.display = "block";
+        musicaFondo.currentTime = 0;
         musicaFondo.play();
-
-        id1 = setInterval(juego, 1000 / 50);
-        id2 = setInterval(abreCierraBoca, 1000 / 12);
+    
         setTimeout(() => {
             mensajeInicio.style.display = "none";
-            juegoBloqueado = false;
-            id3 = setInterval(tiempoRestante, 1000);
+            juegoBloqueado = false; // Desbloquea el juego
+            iniciarTemporizadores();
         }, 5700);
-
     }
 
     function reiniciarPartida() {
+        // Reinicia estados y temporizadores
         clearInterval(id1);
         clearInterval(id2);
         clearInterval(id3);
@@ -426,7 +471,6 @@ window.onload = function() {
         mapaActual = 0;
         contadorPartida = 30;
         nivel = niveles[0];
-    
         direccionActual = null;
         direccionPendiente = null;
     
@@ -444,6 +488,7 @@ window.onload = function() {
     
         miPacman = new Pacman(31, 31);
         miPacman.imagen = imagen;
+    
         dibujarMapa();
         dibujarPacman();
     
@@ -464,41 +509,43 @@ window.onload = function() {
         }, 2000);
     }
     
-    
-    
-    
 
     function iniciarTemporizadores() {
-        if (juegoCorriendo) return; // Evita duplicados
-        juegoCorriendo = true;
+        // Detiene temporizadores existentes antes de iniciar nuevos
+        clearInterval(id1);
+        clearInterval(id2);
+        clearInterval(id3);
     
         id1 = setInterval(juego, 1000 / 50);
         id2 = setInterval(abreCierraBoca, 1000 / 12);
         id3 = setInterval(tiempoRestante, 1000);
+        juegoCorriendo = true;
     }
     
 
     function pausarPartida() {
-    if (!pausada) {
-        sonidoPausa.play();
-    
-        clearInterval(id1);
-        clearInterval(id2);
-        clearInterval(id3);
-        pausada = true;
-        juegoCorriendo = false; // Marca como detenido
-    
-        musicaFondo.pause();
-        mensajePausa.style.display = "block";
-    } else {
-        sonidoPausa.pause();
-        sonidoPausa.currentTime = 0;
+        if (!pausada) {
+            sonidoPausa.play();
+        
+            clearInterval(id1);
+            clearInterval(id2);
+            clearInterval(id3);
+            pausada = true;
+            juegoCorriendo = false; // Marca como detenido
+        
+            musicaFondo.pause();
+            mensajePausa.style.display = "block";
+        } else {
+            sonidoPausa.pause();
+            sonidoPausa.currentTime = 0;
 
-        mensajePausa.style.display = "none";
-        iniciarTemporizadores(); // Reinicia los intervalos
-        pausada = false;
+            mensajePausa.style.display = "none";
+            iniciarTemporizadores(); // Reinicia los intervalos
+            pausada = false;
+            musicaFondo.play();
+        }
     }
-}
+    
 
     function almacenarPuntosEnLocalStorage(puntos) {
         localStorage.setItem('puntosGuardados', puntos); // Almacena los puntos
