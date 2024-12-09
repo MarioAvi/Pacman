@@ -18,7 +18,7 @@
     reiniciar.style.cursor = "not-allowed";
     let musicaFondo = new Audio("assets/audio/musicaFondo.mp3");
     musicaFondo.loop = true; // Hacer que se repita en bucle
-    musicaFondo.volume = 0.01;
+    musicaFondo.volume = 0.1;
     let sonidoPerderVida = new Audio("assets/audio/perderVida.mp3");
     sonidoPerderVida.volume = 0.2;
     let sonidoPausa = new Audio("assets/audio/pausar.mp3");
